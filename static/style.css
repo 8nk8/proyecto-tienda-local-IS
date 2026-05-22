@@ -1,0 +1,267 @@
+/* Sistema de Pedidos en Línea — Estilos */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f7f7f7;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Barra de navegación */
+.navbar {
+    background: #fff;
+    border-bottom: 2px solid #f0f0f0;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ff6b35;
+}
+
+.navbar nav { display: flex; gap: 1.2rem; align-items: center; }
+.navbar nav a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 500;
+}
+.navbar nav a:hover { color: #ff6b35; }
+.usuario { color: #888; font-size: 0.9rem; }
+
+/* Contenido principal */
+.contenido {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+/* Alertas */
+.alerta {
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+.alerta-ok    { background: #d4edda; color: #155724; }
+.alerta-error { background: #f8d7da; color: #721c24; }
+
+/* Formularios */
+.formulario {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.formulario h2 { margin-bottom: 1.2rem; }
+.formulario label {
+    display: block;
+    margin-top: 0.8rem;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+.formulario input,
+.formulario textarea,
+.formulario select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Botones */
+.btn-naranja {
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+}
+.btn-naranja:hover { background: #e85a25; }
+.btn-grande { width: 100%; padding: 1rem; font-size: 1.1rem; }
+.btn-rojo {
+    background: transparent;
+    color: #d9534f;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+button { cursor: pointer; }
+
+.texto-pequeno { margin-top: 1rem; font-size: 0.9rem; text-align: center; }
+
+/* Catálogo */
+.layout-catalogo {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+}
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.tarjeta-producto {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.tarjeta-producto h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+.descripcion { font-size: 0.85rem; color: #777; min-height: 2.5em; }
+.precio { font-size: 1.2rem; font-weight: bold; color: #ff6b35; margin: 0.5rem 0; }
+.stock { font-size: 0.85rem; color: #666; }
+.agotado { color: #d9534f; font-weight: bold; }
+.tarjeta-producto form { display: flex; gap: 0.3rem; margin-top: 0.5rem; }
+.tarjeta-producto input[type=number] {
+    width: 60px;
+    padding: 0.4rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.tarjeta-producto .btn-naranja { margin: 0; flex: 1; padding: 0.4rem; }
+
+/* Carrito lateral */
+.carrito-lateral {
+    background: #fff;
+    padding: 1.2rem;
+    border-radius: 8px;
+    height: fit-content;
+    position: sticky;
+    top: 1rem;
+}
+.carrito-lateral h3 { margin-bottom: 0.8rem; }
+.carrito-lateral ul { list-style: none; }
+.carrito-lateral li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+.carrito-lateral .total {
+    margin-top: 0.8rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #28a745;
+}
+.vacio { color: #999; font-size: 0.9rem; }
+
+/* Tabla carrito */
+.tabla-carrito {
+    width: 100%;
+    background: #fff;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.tabla-carrito th,
+.tabla-carrito td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.tabla-carrito th { background: #f9f9f9; font-weight: 600; }
+.form-inline { display: inline-flex; gap: 0.3rem; align-items: center; }
+.form-inline input,
+.form-inline select { padding: 0.3rem; border: 1px solid #ddd; border-radius: 4px; }
+
+/* Checkout */
+.layout-checkout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+}
+.layout-checkout .resumen {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    height: fit-content;
+}
+.layout-checkout .resumen ul { list-style: none; margin: 1rem 0; }
+.layout-checkout .resumen li { padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; }
+.opciones-pago { display: flex; gap: 1rem; margin-top: 0.5rem; }
+.opcion {
+    flex: 1;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Pedidos */
+.tarjeta-pedido {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.tarjeta-pedido header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+.tarjeta-pedido .fecha { color: #888; font-size: 0.9rem; }
+.tarjeta-pedido .cliente { color: #666; font-size: 0.9rem; }
+.items-pedido { list-style: none; margin: 0.5rem 0; }
+.items-pedido li { padding: 0.3rem 0; color: #555; }
+
+.estado {
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.estado-pendiente { background: #fff3cd; color: #856404; }
+.estado-en-camino { background: #cfe2ff; color: #084298; }
+.estado-entregado { background: #d1e7dd; color: #0f5132; }
+
+.total { font-size: 1.1rem; font-weight: bold; color: #28a745; margin-top: 0.5rem; }
+
+/* Métricas del admin */
+.metricas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.metrica {
+    background: #fff;
+    padding: 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.metrica .etiqueta { display: block; color: #888; font-size: 0.85rem; margin-bottom: 0.3rem; }
+.metrica .valor { display: block; font-size: 1.8rem; font-weight: bold; color: #ff6b35; }
+
+.filtro-fecha {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}

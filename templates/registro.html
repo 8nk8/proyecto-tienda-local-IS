@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block titulo %}Registro de Cliente{% endblock %}
+{% block contenido %}
+<div class="formulario">
+    <h2>Registro de Cliente</h2>
+    <form method="POST">
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="contrasena" required>
+
+        <button type="submit" class="btn-naranja">Registrarse</button>
+    </form>
+    <p class="texto-pequeno">
+        ¿Ya tienes cuenta? <a href="{{ url_for('auth.login') }}">Inicia sesión</a>
+    </p>
+</div>
+{% endblock %}

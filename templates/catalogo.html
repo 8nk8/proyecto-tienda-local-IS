@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block titulo %}Catálogo{% endblock %}
+{% block contenido %}
+<div class="layout-catalogo">
+    <section class="catalogo">
+        <h2>Nuestro Catálogo</h2>
+        {% if productos %}
+            <div class="grid-productos">
+                {% for p in productos %}
+                <div class="tarjeta-producto">
+                    <h3>{{ p.nombre }}</h3>
+                    <p class="descripcion">{{ p.descripcion }}</p>
+                    <p class="precio">${{ '%.2f' | format(p.precio) }}</p>
+                    <p class="stock">
+                        {% if p.stock > 0 %}
+                            Disponibles: {{ p.stock }}
+                        {% else %}
+                            <span class="agotado">Agotado</span>
+                        {% endif %}
+                    </p>
+                    {% if session.idUsuario and session.rol == 'cliente' and p.stock > 0 %}
+                    <form method="POST" action="{{ url_for('carrito.agregar', idProducto=p.idProducto) }}">
+                        <input type="number" name="cantidad" value="1" min="1" max="{{ p.stock }}">
+                        <button type="submit" class="btn-naranja">Agregar</button>
+                    </form>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay productos disponibles en este momento.</p>
+        {% endif %}
+    </section>
+
+    {% if carrito %}
+    <aside class="carrito-lateral">
+        <h3>🛒 Carrito ({{ carrito.items | length }})</h3>
+        {% if carrito.items %}
+            <ul>
+                {% for item in carrito.items %}
+                <li>
+                    {{ item.cantidad }}× {{ item.nombre }}
+                    <span class="subtotal">${{ '%.2f' | format(item.subtotal()) }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="total">Total: ${{ '%.2f' | format(carrito.calcular_total()) }}</p>
+            <a href="{{ url_for('carrito.ver') }}" class="btn-naranja">Ver carrito</a>
+        {% else %}
+            <p class="vacio">Tu carrito está vacío</p>
+        {% endif %}
+    </aside>
+    {% endif %}
+</div>
+{% endblock %}

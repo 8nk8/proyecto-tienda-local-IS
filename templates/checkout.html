@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block titulo %}Finalizar Pedido{% endblock %}
+{% block contenido %}
+<h2>Finalizar Pedido</h2>
+
+<div class="layout-checkout">
+    <section class="resumen">
+        <h3>Resumen del pedido</h3>
+        <ul>
+            {% for item in carrito.items %}
+            <li>{{ item.cantidad }}× {{ item.nombre }} — ${{ '%.2f' | format(item.subtotal()) }}</li>
+            {% endfor %}
+        </ul>
+        <p class="total">Total: ${{ '%.2f' | format(carrito.calcular_total()) }}</p>
+    </section>
+
+    <section class="formulario">
+        <form method="POST">
+            <label>Dirección de entrega</label>
+            <textarea name="direccion" rows="3" required
+                placeholder="Calle, número, colonia, referencias..."></textarea>
+
+            <label>Método de pago</label>
+            <div class="opciones-pago">
+                <label class="opcion">
+                    <input type="radio" name="metodoPago" value="tarjeta" required>
+                    💳 Tarjeta
+                </label>
+                <label class="opcion">
+                    <input type="radio" name="metodoPago" value="efectivo">
+                    💵 Efectivo al recibir
+                </label>
+            </div>
+
+            <button type="submit" class="btn-naranja btn-grande">Confirmar Pedido</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

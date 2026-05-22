@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titulo %}Tienda Local{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">🛒 Tienda Local</div>
+        <nav>
+            {% if session.idUsuario %}
+                {% if session.rol == 'cliente' %}
+                    <a href="{{ url_for('catalogo.ver') }}">Menú</a>
+                    <a href="{{ url_for('pedidos.mis_pedidos') }}">Mis Pedidos</a>
+                    <a href="{{ url_for('carrito.ver') }}">Carrito</a>
+                {% elif session.rol == 'encargado' %}
+                    <a href="{{ url_for('admin.panel') }}">Panel</a>
+                {% endif %}
+                <span class="usuario">👤 {{ session.nombre }}</span>
+                <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+                <a href="{{ url_for('auth.registro') }}">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="contenido">
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% if mensajes %}
+                {% for categoria, mensaje in mensajes %}
+                    <div class="alerta alerta-{{ categoria }}">{{ mensaje }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block contenido %}{% endblock %}
+    </main>
+</body>
+</html>

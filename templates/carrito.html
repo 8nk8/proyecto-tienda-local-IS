@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block titulo %}Mi Carrito{% endblock %}
+{% block contenido %}
+<h2>🛒 Carrito ({{ carrito.items | length if carrito else 0 }})</h2>
+
+{% if carrito and carrito.items %}
+<table class="tabla-carrito">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in carrito.items %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>${{ '%.2f' | format(item.precioUnitario) }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('carrito.actualizar', idProducto=item.idProducto) }}"
+                      class="form-inline">
+                    <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1">
+                    <button type="submit">Actualizar</button>
+                </form>
+            </td>
+            <td>${{ '%.2f' | format(item.subtotal()) }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('carrito.quitar', idProducto=item.idProducto) }}"
+                      class="form-inline">
+                    <button type="submit" class="btn-rojo">🗑</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"><strong>Total:</strong></td>
+            <td colspan="2"><strong>${{ '%.2f' | format(carrito.calcular_total()) }}</strong></td>
+        </tr>
+    </tfoot>
+</table>
+
+<a href="{{ url_for('pedidos.checkout') }}" class="btn-naranja btn-grande">Realizar Pedido</a>
+
+{% else %}
+    <p>Tu carrito está vacío. <a href="{{ url_for('catalogo.ver') }}">Ver catálogo</a></p>
+{% endif %}
+{% endblock %}

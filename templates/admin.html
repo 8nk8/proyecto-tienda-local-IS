@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block titulo %}Panel del Encargado{% endblock %}
+{% block contenido %}
+<h2>Panel de Administración</h2>
+
+<div class="metricas">
+    <div class="metrica">
+        <span class="etiqueta">Total Pedidos</span>
+        <span class="valor">{{ total_pedidos }}</span>
+    </div>
+    <div class="metrica">
+        <span class="etiqueta">Pendientes</span>
+        <span class="valor">{{ pendientes }}</span>
+    </div>
+    <div class="metrica">
+        <span class="etiqueta">Ventas Total</span>
+        <span class="valor">${{ '%.2f' | format(total_ventas) }}</span>
+    </div>
+</div>
+
+<form method="GET" class="filtro-fecha">
+    <label>Filtrar por fecha:</label>
+    <input type="date" name="fecha" value="{{ fecha or '' }}">
+    <button type="submit">Filtrar</button>
+    <a href="{{ url_for('admin.panel') }}">Ver hoy</a>
+</form>
+
+{% if pedidos %}
+    {% for p in pedidos %}
+    <article class="tarjeta-pedido">
+        <header>
+            <h3>Pedido #{{ p.idPedido }}</h3>
+            <span class="cliente">Cliente: {{ p.nombreCliente }}</span>
+            <span class="fecha">{{ p.fecha }}</span>
+            <span class="estado estado-{{ p.estado | replace(' ', '-') }}">{{ p.estado }}</span>
+        </header>
+        <ul class="items-pedido">
+            {% for d in p.detalles %}
+            <li>{{ d.cantidad }}× {{ d.nombre }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Dirección:</strong> {{ p.direccionEntrega }}</p>
+        <p><strong>Pago:</strong> {{ p.metodoPago }}</p>
+        <p class="total">Total: ${{ '%.2f' | format(p.total) }}</p>
+
+        <form method="POST"
+              action="{{ url_for('admin.cambiar_estado', idPedido=p.idPedido) }}"
+              class="form-inline">
+            <label>Cambiar estado:</label>
+            <select name="estado">
+                <option value="pendiente" {% if p.estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
+                <option value="en camino" {% if p.estado == 'en camino' %}selected{% endif %}>En camino</option>
+                <option value="entregado" {% if p.estado == 'entregado' %}selected{% endif %}>Entregado</option>
+            </select>
+            <button type="submit">Actualizar</button>
+        </form>
+    </article>
+    {% endfor %}
+{% else %}
+    <p>No hay pedidos registrados para esta fecha.</p>
+{% endif %}
+{% endblock %}

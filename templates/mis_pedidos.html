@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block titulo %}Mis Pedidos{% endblock %}
+{% block contenido %}
+<h2>Mis Pedidos</h2>
+
+{% if pedidos %}
+    {% for p in pedidos %}
+    <article class="tarjeta-pedido">
+        <header>
+            <h3>Pedido #{{ p.idPedido }}</h3>
+            <span class="fecha">{{ p.fecha }}</span>
+            <span class="estado estado-{{ p.estado | replace(' ', '-') }}">{{ p.estado }}</span>
+        </header>
+        <ul class="items-pedido">
+            {% for d in p.detalles %}
+            <li>{{ d.cantidad }}× {{ d.nombre }} — ${{ '%.2f' | format(d.precioUnitario) }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Dirección:</strong> {{ p.direccionEntrega }}</p>
+        <p><strong>Pago:</strong> {{ p.metodoPago }}</p>
+        <p class="total">Total: ${{ '%.2f' | format(p.total) }}</p>
+    </article>
+    {% endfor %}
+{% else %}
+    <p>Aún no tienes pedidos. <a href="{{ url_for('catalogo.ver') }}">Ver catálogo</a></p>
+{% endif %}
+{% endblock %}
